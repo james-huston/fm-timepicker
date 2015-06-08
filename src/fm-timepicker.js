@@ -81,6 +81,9 @@
 			$scope.largeInterval = $scope.largeInterval || moment.duration( 60, "minutes" );
 			$scope.strict = $scope.strict || false;
 			$scope.btnClass = $scope.btnClass || "btn-default";
+			$scope.listStyle = $scope.listStyle || "height:auto; max-height:160px; overflow-y:scroll;";
+			$scope.listClass = $scope.listClass || "dropdown-menu form-control";
+			$scope.listItemClass = $scope.listItemClass || "";
 
 			if( moment.tz ) {
 				$scope.startTime.tz( $scope.reference.tz() );
@@ -253,9 +256,9 @@
 					"    </span>" +
 					"  </div>" +
 					"  <div class='dropdown' ng-if='style==\"dropdown\"' ng-class='{open:isOpen}'>" +
-					"    <ul class='dropdown-menu form-control' style='height:auto; max-height:160px; overflow-y:scroll;' ng-mousedown=\"handleListClick($event)\">" +
+					"    <ul class='{{listClass}}' style='{{listStyle}}' ng-mousedown=\"handleListClick($event)\">" +
 						// Fill an empty array with time values between start and end time with the given interval, then iterate over that array.
-					"      <li ng-repeat='time in ( $parent.dropDownOptions = ( [] | fmTimeInterval:startTime:endTime:interval ) )' ng-click='select(time,$index)' ng-class='{active:(activeIndex==$index)}'>" +
+					"      <li class='{{listItemClass}}' ng-repeat='time in ( $parent.dropDownOptions = ( [] | fmTimeInterval:startTime:endTime:interval ) )' ng-click='select(time,$index)' ng-class='{active:(activeIndex==$index)}'>" +
 						// For each item, check if it is the last item. If it is, communicate the index to a method in the scope.
 						// empty string on false instead of noop to avoid false as every other option in angular 1.4.x
 					"        {{$last?largestPossibleIndexIs($index):''}}" +
@@ -278,7 +281,10 @@
 						isOpen        : "=?",
 						style         : "=?",
 						strict        : "=?",
-						btnClass      : "=?"
+						btnClass      : "=?",
+						listStyle			: "@?",
+						listClass			: "@?",
+						listItemClass	: "@?"
 					},
 					controller : "fmTimepickerController",
 					require    : "ngModel",
